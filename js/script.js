@@ -22,28 +22,16 @@ const images = [
     }
 ];
 
-setInterval(() => {
-		listHighlighted[activeIndex].classList.remove('active');
-		listThumbs[activeIndex].classList.remove('active');
-		// settiamo il nuovo valore di active index
-		activeIndex++;
-		if (activeIndex >= listHighlighted.length) {
-			activeIndex = 0;
-		}
-		// alla nuova immagine attiva aggiungiamo la classe active
-		listHighlighted[activeIndex].classList.add('active');
-		listThumbs[activeIndex].classList.add('active');
-	}, 3000);
 
 const containerHighlighted = document.querySelector('.highlighted');
 const containerThumbs = document.querySelector('.thumbs');
 
 for (let i = 0; i < images.length; i++) {
-	containerHighlighted.innerHTML += 
+    containerHighlighted.innerHTML += 
     `<div class="img_container ${i == 0 ? 'active' : ''}">
-        <img src="${images[i].image}" alt="" class="${i == 0 ? 'active' : ''}">
-        <h2 class="title">${images[i].title}</h2>
-        <p class="text">${images[i].text}</p>
+    <img src="${images[i].image}" alt="" class="${i == 0 ? 'active' : ''}">
+    <h2 class="title">${images[i].title}</h2>
+    <p class="text">${images[i].text}</p>
     </div>`;
 	containerThumbs.innerHTML += 
     `<img src="${images[i].image}" alt="" class="${i == 0 ? 'active' : ''}">`;
@@ -57,12 +45,42 @@ const listThumbs = document.querySelectorAll('.thumbs img');
 // selezioniamo i bottoni
 const btnPrev = document.querySelector('.btn-prev');
 const btnNext = document.querySelector('.btn-next');
-
-
+const btnReverse = document.querySelector('.inverso')
 // definito una variabile che rappresenta lo stato attuale del carosello
 // cioe' l'indice dell'immagine attiva
 let activeIndex = 0;
 
+let setIntervalReverse= setInterval(() => {
+        listHighlighted[activeIndex].classList.remove('active');
+        listThumbs[activeIndex].classList.remove('active');
+        // settiamo il nuovo valore di active index
+        activeIndex++;
+        if (activeIndex >= listHighlighted.length) {
+            activeIndex = 0;
+        }
+        // alla nuova immagine attiva aggiungiamo la classe active
+        listHighlighted[activeIndex].classList.add('active');
+        listThumbs[activeIndex].classList.add('active');
+    }, 3000);
+
+    btnReverse.addEventListener('click',
+    function(){
+        clearInterval(setIntervalReverse);
+        setInterval(()=>{
+            listHighlighted[activeIndex].classList.remove('active');
+		listThumbs[activeIndex].classList.remove('active');
+		// settiamo il nuovo valore di active index
+		activeIndex--;
+		if (activeIndex < 0) {
+			activeIndex = listHighlighted.length - 1;
+		}
+		// alla nuova immagine attiva aggiungiamo la classe active
+		listHighlighted[activeIndex].classList.add('active');
+		listThumbs[activeIndex].classList.add('active');
+        }
+        , 3000);
+        
+    });
 btnNext.addEventListener('click',
 	function() {
 		// dall'immagine attiva tolgo la classe active
