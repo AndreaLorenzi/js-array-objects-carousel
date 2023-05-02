@@ -22,6 +22,19 @@ const images = [
     }
 ];
 
+setInterval(() => {
+		listHighlighted[activeIndex].classList.remove('active');
+		listThumbs[activeIndex].classList.remove('active');
+		// settiamo il nuovo valore di active index
+		activeIndex++;
+		if (activeIndex >= listHighlighted.length) {
+			activeIndex = 0;
+		}
+		// alla nuova immagine attiva aggiungiamo la classe active
+		listHighlighted[activeIndex].classList.add('active');
+		listThumbs[activeIndex].classList.add('active');
+	}, 3000);
+
 const containerHighlighted = document.querySelector('.highlighted');
 const containerThumbs = document.querySelector('.thumbs');
 
